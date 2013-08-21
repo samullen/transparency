@@ -6,7 +6,8 @@ feature "Signing in Feature Test" do
     user = User.create(:email => "user@example.com", :password => "123123123", :password_confirmation => "123123123")
     
     visit root_path
-    SigninPage.signin_user(user)
-    current_path.must_equal dashboard_path
+    current_path.must_equal new_user_session_path
+    SigninPage.new(user).signin_user
+    current_path.must_equal root_path
   end
 end
