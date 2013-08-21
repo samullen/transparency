@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130821174915) do
+ActiveRecord::Schema.define(version: 20130821201838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: true do |t|
+    t.string   "name",       limit: 128, null: false
+    t.string   "remote_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
 
   create_table "projects", force: true do |t|
     t.integer  "user_id",                null: false
@@ -25,6 +34,22 @@ ActiveRecord::Schema.define(version: 20130821174915) do
   end
 
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
+
+  create_table "tasks", force: true do |t|
+    t.integer  "project_id",                            null: false
+    t.string   "name",        limit: 128,               null: false
+    t.string   "remote_id",   limit: 128
+    t.integer  "category_id"
+    t.boolean  "billable"
+    t.float    "hours",                   default: 0.0
+    t.datetime "started_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["category_id"], name: "index_tasks_on_category_id", using: :btree
+  add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
+  add_index "tasks", ["started_at"], name: "index_tasks_on_started_at", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                               null: false
