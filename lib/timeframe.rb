@@ -13,8 +13,8 @@ class Timeframe
 
   def each
     while @current_time <= @end_time
-      @current_time += ONEDAY
       yield @current_time
+      @current_time += ONEDAY
     end
   end
 end
