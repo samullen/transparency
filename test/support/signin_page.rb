@@ -1,4 +1,5 @@
 class SigninPage
+  include Rails.application.routes.url_helpers
   include Capybara::DSL
 
   attr_accessor :user
@@ -8,6 +9,7 @@ class SigninPage
   end
 
   def signin_user
+    visit new_user_session_path
     self.fill_in_email
     self.fill_in_password
     self.submit
