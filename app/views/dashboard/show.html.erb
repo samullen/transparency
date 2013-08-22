@@ -1,0 +1,9 @@
+<table id='project-breakdown'>
+<tbody>
+  <%= @projects.each do |project| %>
+    <tr>
+      <td><%= project.name %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
