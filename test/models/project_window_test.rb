@@ -15,8 +15,8 @@ describe ProjectWindow do
       sdate = Time.now.beginning_of_month
       edate = Time.now.end_of_month
       project_window = ProjectWindow.new(Object.new)
-      project_window.start_date.must_equal sdate
-      project_window.end_date.must_equal edate
+      project_window.timeframe.start_time.must_equal sdate
+      project_window.timeframe.end_time.must_equal edate
     end
   end
 
@@ -44,11 +44,11 @@ describe ProjectWindow do
         Task.new(:hours => 3, :started_at => "2013-08-05"),
         Task.new(:hours => 4.5, :started_at => "2013-08-08"),
       ]
-      daterange = Time.parse('2013-08-01')..Time.parse('2013-08-31')
+      timeframe = Timeframe.new(Time.parse('2013-08-01'), Time.parse('2013-08-31'))
 
-      project_window = ProjectWindow.new(project, daterange)
+      project_window = ProjectWindow.new(project, timeframe)
       project.stub :tasks, tasks do
-        project_window.hours_by_day.must_equal [0, 0, 3.0, 0, 3.0, 0, 0, 4.5]
+        project_window.hours_by_day.must_equal [0, 0, 3.0, 0, 3.0, 0, 0, 4.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       end
     end
   end
