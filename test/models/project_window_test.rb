@@ -7,16 +7,31 @@ describe ProjectWindow do
       ProjectWindow.new(Object.new).must_be_instance_of ProjectWindow
     end
 
-    it "can take a timeframe" do
+    it "can take a daterange" do
       ProjectWindow.new(Object.new, 0..10).must_be_instance_of ProjectWindow
     end
 
-    it "defaults the timeframe to the current month" do
+    it "defaults the daterange to the current month" do
       sdate = Time.now.beginning_of_month
       edate = Time.now.end_of_month
       project_window = ProjectWindow.new(Object.new)
-      project_window.timeframe.start_time.must_equal sdate
-      project_window.timeframe.end_time.must_equal edate
+      project_window.daterange.start_time.must_equal sdate
+      project_window.daterange.end_time.must_equal edate
+    end
+  end
+
+  describe "::for_projects" do
+    before do
+      @projects = [ Project.new, Project.new, Project.new ]
+      @project_windows = ProjectWindow.for_projects(@projects)
+    end
+
+    it "creates a project window object for each project" do
+      @project_windows.all? {|pw| pw.must_be_instance_of ProjectWindow}
+    end
+
+    it "creates the same number as projects passed in" do
+      @project_windows.size.must_equal @projects.size
     end
   end
 
@@ -44,9 +59,9 @@ describe ProjectWindow do
         Task.new(:hours => 3, :started_at => "2013-08-05"),
         Task.new(:hours => 4.5, :started_at => "2013-08-08"),
       ]
-      timeframe = Timeframe.new(Time.parse('2013-08-01'), Time.parse('2013-08-31'))
+      daterange = Daterange.new(Time.parse('2013-08-01'), Time.parse('2013-08-31'))
 
-      project_window = ProjectWindow.new(project, timeframe)
+      project_window = ProjectWindow.new(project, daterange)
       project.stub :tasks, tasks do
         project_window.hours_by_day.must_equal [0, 0, 3.0, 0, 3.0, 0, 0, 4.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       end
