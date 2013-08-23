@@ -52,18 +52,27 @@ describe ProjectWindow do
   end
 
   describe "#hours_by_day" do
-    it "returns the sum of hours for all tasks" do
-      project = Project.new
-      tasks = [
+    before do
+      @project = Project.new
+      @tasks = [
         Task.new(:hours => 3, :started_at => "2013-08-03"),
         Task.new(:hours => 3, :started_at => "2013-08-05"),
         Task.new(:hours => 4.5, :started_at => "2013-08-08"),
       ]
-      daterange = Daterange.new(Time.parse('2013-08-01'), Time.parse('2013-08-31'))
+      @daterange = Daterange.new(Time.parse('2013-08-01'), Time.parse('2013-08-31'))
 
-      project_window = ProjectWindow.new(project, daterange)
-      project.stub :tasks, tasks do
-        project_window.hours_by_day.must_equal [0, 0, 3.0, 0, 3.0, 0, 0, 4.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      @project_window = ProjectWindow.new(@project, @daterange)
+    end
+
+    it "returns an array the same size as the days in the daterange" do
+      @project_window.hours_by_day.size.must_equal 31
+    end
+
+    it "returns the sum of hours for all tasks" do
+      @project.stub :tasks, @tasks do
+        @project_window.hours_by_day[2].must_equal 3.0
+        @project_window.hours_by_day[4].must_equal 3.0
+        @project_window.hours_by_day[7].must_equal 4.5
       end
     end
   end
