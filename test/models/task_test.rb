@@ -2,10 +2,10 @@ require "test_helper"
 
 describe Task do
   before do
-    @task = Task.new
+    @task = Task.new(:project_id => 1001, :name => "Example Task")
   end
 
   it "must be valid" do
-    @task.valid?.must_equal true
+    @task.must_be :valid?
   end
 end

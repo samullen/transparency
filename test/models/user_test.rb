@@ -2,10 +2,10 @@ require "test_helper"
 
 describe User do
   before do
-    @user = User.new
+    @user = User.new(:email => "user@example.com", :password => '123123123')
   end
 
   it "must be valid" do
-    @user.valid?.must_equal true
+    @user.must_be :valid?
   end
 end

@@ -92,4 +92,12 @@ describe ProjectWindow do
       end
     end
   end
+
+  describe "#project_name" do
+    it "returns the name of the project it represents" do
+      project = Project.new(:name => "Example Project")
+      project_window = ProjectWindow.new(project)
+      project_window.project_name.must_equal project.name
+    end
+  end
 end

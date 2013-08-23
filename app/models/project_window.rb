@@ -29,4 +29,8 @@ class ProjectWindow
   def tasks
     @tasks ||= self.project.tasks
   end
+
+  def project_name
+    self.project.name
+  end
 end
