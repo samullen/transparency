@@ -8,7 +8,7 @@ describe "POST :: /api/projects request" do
       admin = user_factory.create(:role => 'admin')
       user = user_factory.create({:remote_id => 42})
 
-      post api_projects_path(:json, {
+      post api_foreign_projects_path(:json, {
         :auth_token => admin.authentication_token,
         :name => "Example Project",
         :remote_client_id => 42,
@@ -30,7 +30,7 @@ describe "POST :: /api/projects request" do
       user = user_factory.create({:remote_id => 42})
       project = Project.create(:name => "Example Project", :remote_id => 1001, :user_id => user.id)
 
-      post api_projects_path(:json, {
+      post api_foreign_projects_path(:json, {
         :auth_token => admin.authentication_token,
         :name => project.name,
         :remote_client_id => 42,
@@ -50,7 +50,7 @@ describe "POST :: /api/projects request" do
       user_factory = UserFactory.new
       user = user_factory.create({:remote_id => 42})
 
-      post api_projects_path(:json, {
+      post api_foreign_projects_path(:json, {
         :auth_token => user.authentication_token,
         :name => "Example project",
         :remote_client_id => 42,

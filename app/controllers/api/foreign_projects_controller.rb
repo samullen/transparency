@@ -1,4 +1,4 @@
-class Api::ProjectsController < ApplicationController
+class Api::ForeignProjectsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :authorize_admin
 

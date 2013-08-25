@@ -4,8 +4,8 @@ Transparency::Application.routes.draw do
   root "dashboard#show"
 
   namespace :api do
-    resources :projects
-    resources :tasks
+    resources :foreign_projects
+    resources :foreign_tasks
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
