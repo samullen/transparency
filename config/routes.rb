@@ -5,6 +5,7 @@ Transparency::Application.routes.draw do
 
   namespace :api do
     resources :projects
+    resources :tasks
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
