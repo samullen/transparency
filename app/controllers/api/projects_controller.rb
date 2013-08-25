@@ -1,5 +1,6 @@
 class Api::ProjectsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :authorize_admin
 
   def create
     user = User.find_by_remote_id(params[:remote_client_id])
@@ -13,6 +14,15 @@ class Api::ProjectsController < ApplicationController
       end
     else
       render :json => project.to_json
+    end
+  end
+
+  private
+
+  def authorize_admin
+    unless current_user.admin?
+      render :json => {:error => "unauthorized access"}
+      return
     end
   end
 end
