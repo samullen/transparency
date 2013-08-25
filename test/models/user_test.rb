@@ -1,11 +1,16 @@
+$LOAD_PATH.unshift(File.expand_path("../..", __FILE__))
 require "test_helper"
 
 describe User do
-  before do
-    @user = User.new(:email => "user@example.com", :password => '123123123')
-  end
+  describe "#admin?" do
+    it "is true if role == 'admin'" do
+      user = User.new(:role => 'admin')
+      user.must_be :admin?
+    end
 
-  it "must be valid" do
-    @user.must_be :valid?
+    it "is false if role != 'admin'" do
+      user = User.new(:role => 'general')
+      user.wont_be :admin?
+    end
   end
 end

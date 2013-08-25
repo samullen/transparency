@@ -4,14 +4,13 @@ require "rails/test_help"
 require "minitest/rails"
 require "minitest/rails/capybara"
 
-# DatabaseCleaner.strategy = :transaction
-
 Dir[Rails.root.join("test/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("test/factories/**/*.rb")].each {|f| require f}
 
-# class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #fixtures :all
+DatabaseCleaner.strategy = :transaction
 
-  # Add more helper methods to be used by all tests here...
-# end
+class ActionDispatch::IntegrationTest
+  register_spec_type(/Request( ?Test)?\z/i, self)
+  include Rails.application.routes.url_helpers
+  include Capybara::DSL
+end
