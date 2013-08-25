@@ -4,4 +4,6 @@ class User < ActiveRecord::Base
          :validatable, :token_authenticatable
 
   has_many :projects
+
+  before_create :ensure_authentication_token
 end
