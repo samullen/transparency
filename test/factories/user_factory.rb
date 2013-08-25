@@ -3,18 +3,18 @@ class UserFactory
     @sequence = 0
   end
   
-  def build(options={})
+  def build(options=nil)
     options = {
       :email => "user#{self.sequence}@example.com",
       :password => "password",
       :password_confirmation => "password",
-    }.merge(options)
+    }.merge(options || {})
 
     User.new(options)
   end
 
-  def create(options={})
-    user = build(options)
+  def create(options=nil)
+    user = self.build(options || {})
     user.save
     user
   end
