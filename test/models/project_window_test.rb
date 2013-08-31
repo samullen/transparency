@@ -51,6 +51,14 @@ describe ProjectWindow do
     end
   end
 
+  describe "#total_days" do
+    it "returns the number of days in teh date range" do
+      daterange = Daterange.new(Time.now, 14.days.from_now)
+      project_window = ProjectWindow.new(Project.new, daterange)
+      project_window.total_days.must_equal 15
+    end
+  end
+
   describe "#hours_by_day" do
     before do
       @project = Project.new
