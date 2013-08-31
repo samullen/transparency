@@ -1,6 +1,10 @@
 class Api::ForeignProjectsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+
   before_filter :authenticate_user!
   before_filter :authorize_admin
+
+  respond_to :json
 
   def create
     user = User.find_by_remote_id(params[:remote_client_id])
@@ -8,12 +12,12 @@ class Api::ForeignProjectsController < ApplicationController
 
     if project.new_record?
       if project.save
-        render :json => project.to_json
+        respond_with project
       else
         render :json => {:error => "Unable to findor create project"}
       end
     else
-      render :json => project.to_json
+      respond_with project
     end
   end
 

@@ -1,11 +1,12 @@
 <table id='project-breakdown'>
 <tbody>
-  <%= @project_windows.each do |project_window| %>
+  <% @project_windows.each do |project_window| %>
     <tr>
       <td><%= project_window.project_name %></td>
-      <% project_window.hours_by_day do |hours| %>
+      <% project_window.hours_by_day.each do |hours| %>
         <td><%= hours %></td>
       <% end %> 
+      <td><%= project_window.total_hours %></td>
     </tr>
   <% end %>
 </tbody>
