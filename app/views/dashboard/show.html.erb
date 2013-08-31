@@ -1,3 +1,6 @@
+<div id="pie_chart" width="400" height="400"></div>
+<div id="area_chart" width="400" height="600"></div>
+
 <table id='project-breakdown'>
 <tbody>
   <% @project_windows.each do |project_window| %>
@@ -9,5 +12,10 @@
       <td><%= project_window.total_hours %></td>
     </tr>
   <% end %>
+  <tr>
+    <td colspan="<%= @project_windows.first.total_days + 2 %>" style="text-align: right">
+      Total Hours: <%= @project_analytic.total_hours %>
+    </td>
+  </tr>
 </tbody>
 </table>
