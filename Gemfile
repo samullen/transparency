@@ -25,6 +25,8 @@ gem 'jquery-rails'
 gem "devise", "~> 3.0.3"
 gem "simple_form", "~> 3.0.0rc"
 
+gem "harvested", "~> 1.0.1"
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # gem 'turbolinks'
 
