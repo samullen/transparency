@@ -1,5 +1,32 @@
-<div id="pie_chart" width="400" height="400"></div>
-<div id="area_chart" width="400" height="600"></div>
+<%= javascript_tag do %>
+  var percentages_data = [
+    <% @project_windows.each do |project_window| %>
+      { 
+        label: "<%= project_window.project_name %>",
+        value: <%= project_window.total_hours %> 
+      },
+    <% end %>
+  ];
+  
+  var hour_data = new Array;
+  var ykeys = new Array;
+
+  <% @project_windows.each do |project_window| %>
+    ykeys.push("<%=project_window.project_name%>");
+
+    <% project_window.hours_by_day.each_with_index do |hour, i| %>
+      var date = "<%= project_window.daterange[i].strftime('%Y-%m-%d') %>";
+      hour_data[<%=i%>] || (hour_data[<%=i%>] = {});
+      hour_data[<%=i%>]['y'] = date;
+      hour_data[<%=i%>]["<%=project_window.project_name%>"] = <%=hour%>;
+    <% end %>
+  <% end %>
+<% end %>
+
+<div class='row'>
+  <div id="project-percentages" class="col-md-4" style="height: 300px"></div>
+  <div id="daily_hours" class="col-md-8" style="height: 300px"></div>
+</div>
 
 <table id='project-breakdown'>
 <tbody>

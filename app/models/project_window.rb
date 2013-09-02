@@ -10,6 +10,14 @@ class ProjectWindow
     projects.map {|project| self.new(project, daterange)}
   end
 
+  def project_name
+    self.project.name
+  end
+
+  def tasks
+    @tasks ||= self.project.tasks
+  end
+
   def total_hours
     self.tasks.sum {|t| t.hours}
   end
@@ -28,13 +36,5 @@ class ProjectWindow
 
   def average_hours
     self.total_hours / self.tasks.size
-  end
-
-  def tasks
-    @tasks ||= self.project.tasks
-  end
-
-  def project_name
-    self.project.name
   end
 end
