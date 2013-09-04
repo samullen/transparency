@@ -17,10 +17,11 @@ describe ProjectAnalytic do
       project_windows = Array.new
       3.times do |i|
         project = Project.new(:name => "Example Project #{i}")
-        def project.tasks 
+        project_window = ProjectWindow.new(project)
+        def project_window.tasks 
           [Task.new(:hours => 3),Task.new(:hours => 3),Task.new(:hours => 4.5)]
         end
-        project_windows << ProjectWindow.new(project)
+        project_windows << project_window
       end
 
       project_analytic = ProjectAnalytic.new(project_windows)
