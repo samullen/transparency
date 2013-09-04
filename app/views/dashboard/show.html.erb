@@ -34,15 +34,15 @@
 </div>
 
 <table id='project-breakdown' class='table table-striped'>
-  <thead>
-    <tr>
-      <th>Project</th>
-      <% @project_windows.first.daterange.each do |date| %>
-        <th><%= date.strftime("%d") %></th>
-      <% end %>
-      <th>Total</th>
-    </tr>
-  </thead>
+<thead>
+  <tr>
+    <th>Project</th>
+    <% @daterange.each do |date| %>
+      <th><%= date.strftime("%d") %></th>
+    <% end %>
+    <th>Total</th>
+  </tr>
+</thead>
 <tbody>
   <% @project_windows.each do |project_window| %>
     <tr>
@@ -54,7 +54,7 @@
     </tr>
   <% end %>
   <tr>
-    <td colspan="<%= @project_windows.first.total_days + 2 %>" style="text-align: right">
+    <td colspan="<%= @daterange.count + 2 %>" style="text-align: right">
       Total Hours: <%= @project_analytic.total_hours %>
     </td>
   </tr>

@@ -20,12 +20,12 @@ class Api::ForeignTasksController < ApplicationController
       }
 
       if task.save
-        respond_with task
+        render :json => task
       else
         render :json => {:error => "Unable to findor create project"}
       end
     else
-      respond_with task
+      render :json => task
     end
   end
 

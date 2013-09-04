@@ -6,15 +6,18 @@ feature "Dashboard Feature Test" do
     dashboard = DashboardPage.new
     user_factory = UserFactory.new
     project_factory = ProjectFactory.new
+    task_factory = TaskFactory.new
 
     user = user_factory.create
     project_a = project_factory.create(:user => user)
+      task_factory.create(:project => project_a, :started_at => Time.zone.now)
     project_b = project_factory.create(:user => user)
+      task_factory.create(:project => project_b, :started_at => Time.zone.now)
 
     SigninPage.new(user).signin_user
 
     dashboard.has_project_breakdown? 
-    dashboard.project_breakdown_rows.size.must_equal 2
+    dashboard.project_breakdown_rows.size.must_equal 3
   end
 
   scenario "Normal user with no projects" do
@@ -26,7 +29,7 @@ feature "Dashboard Feature Test" do
     SigninPage.new(user).signin_user
 
     dashboard.has_project_breakdown? 
-    dashboard.project_breakdown_rows.size.must_equal 0
+    dashboard.project_breakdown_rows.size.must_equal 1
   end
 
   scenario "Admin user with multiple users with projects" do

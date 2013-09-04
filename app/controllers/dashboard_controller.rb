@@ -3,19 +3,19 @@ class DashboardController < ApplicationController
 
   def show
     now = Time.zone.now
-    daterange = Daterange.new(now.beginning_of_month, now.end_of_month)
+    @daterange = Daterange.new(now.beginning_of_month, now.end_of_month)
 
-    projects = Project.accessible_by(current_user).active_for_daterange(daterange)
-    prepare_dashboard(projects, daterange)
+    projects = Project.accessible_by(current_user).active_for_daterange(@daterange)
+    prepare_dashboard(projects, @daterange)
   end
 
   def create
     month = Time.parse(params[:month])
 
-    daterange = Daterange.new(month.beginning_of_month, month.end_of_month)
+    @daterange = Daterange.new(month.beginning_of_month, month.end_of_month)
 
-    projects = Project.accessible_by(current_user).active_for_daterange(daterange)
-    prepare_dashboard(projects, daterange)
+    projects = Project.accessible_by(current_user).active_for_daterange(@daterange)
+    prepare_dashboard(projects, @daterange)
 
     render :show
   end
