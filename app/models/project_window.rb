@@ -15,7 +15,7 @@ class ProjectWindow
   end
 
   def tasks
-    @tasks ||= self.project.tasks
+    @tasks ||= self.project.tasks.where(:started_at => @daterange.start_time .. @daterange.end_time)
   end
 
   def total_hours

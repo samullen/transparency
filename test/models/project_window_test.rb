@@ -45,7 +45,7 @@ describe ProjectWindow do
       ]
 
       project_window = ProjectWindow.new(project)
-      project.stub :tasks, tasks do
+      project_window.stub :tasks, tasks do
         project_window.total_hours.must_equal 10.5
       end
     end
@@ -77,7 +77,7 @@ describe ProjectWindow do
     end
 
     it "returns the sum of hours for all tasks" do
-      @project.stub :tasks, @tasks do
+      @project_window.stub :tasks, @tasks do
         @project_window.hours_by_day[2].must_equal 3.0
         @project_window.hours_by_day[4].must_equal 3.0
         @project_window.hours_by_day[7].must_equal 4.5
@@ -95,7 +95,7 @@ describe ProjectWindow do
       ]
 
       project_window = ProjectWindow.new(project)
-      project.stub :tasks, tasks do
+      project_window.stub :tasks, tasks do
         project_window.average_hours.must_equal 3.5
       end
     end
