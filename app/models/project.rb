@@ -9,4 +9,10 @@ class Project < ActiveRecord::Base
   def self.accessible_by(user)
     user.admin? ? self.all : self.where("user_id = ?", user.id)
   end
+
+  def self.active_for_daterange(daterange)
+    arel = self.joins(:tasks)
+    arel = arel.where(:tasks => {:started_at => daterange.start_time..daterange.end_time})
+    arel = arel.distinct
+  end
 end
