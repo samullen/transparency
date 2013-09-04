@@ -23,20 +23,34 @@
   <% end %>
 <% end %>
 
+<%= form_tag dashboard_path do %>
+  <%= select_tag "month", options_for_select(@months.map {|m| [m.to_s(:long), m.to_s(:db)]}) %>
+  <%= submit_tag %>
+<% end %>
+
 <div class='row'>
   <div id="project-percentages" class="col-md-4" style="height: 300px"></div>
   <div id="daily_hours" class="col-md-8" style="height: 300px"></div>
 </div>
 
-<table id='project-breakdown'>
+<table id='project-breakdown' class='table table-striped'>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <% @project_windows.first.daterange.each do |date| %>
+        <th><%= date.strftime("%d") %></th>
+      <% end %>
+      <th>Total</th>
+    </tr>
+  </thead>
 <tbody>
   <% @project_windows.each do |project_window| %>
     <tr>
       <td><%= project_window.project_name %></td>
       <% project_window.hours_by_day.each do |hours| %>
-        <td><%= hours %></td>
+        <td class='numeric'><%= hours %></td>
       <% end %> 
-      <td><%= project_window.total_hours %></td>
+      <td class='numeric'><%= project_window.total_hours %></td>
     </tr>
   <% end %>
   <tr>
