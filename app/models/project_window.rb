@@ -19,7 +19,7 @@ class ProjectWindow
   end
 
   def total_hours
-    self.tasks.sum {|t| t.hours}
+    self.tasks.sum(:hours)
   end
 
   def total_days
