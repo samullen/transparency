@@ -30,7 +30,7 @@ class ProjectWindow
     @hours_by_day ||= self.daterange.map do |date|
       self.tasks.find_all {|t| 
         t.started_at.strftime("%Y%m%d") == date.strftime("%Y%m%d")
-      }.sum {|t| t.hours}
+      }.sum(:hours).round(2)
     end
   end
 
