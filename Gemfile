@@ -50,6 +50,10 @@ gem "harvested", "~> 1.0.1"
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+group :production do
+    gem 'rails_12factor'
+end
+
 group :development, :test do
   gem "minitest-rails", "~> 0.9.2"
 end
