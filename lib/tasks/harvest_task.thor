@@ -31,7 +31,7 @@ class HarvestTask < Thor
         :name => htask.notes,
         :category => category,
         :hours => htask.hours,
-        :started_at => htask.created_at
+        :started_at => htask.spent_at
       }
 
       task.save
