@@ -17,3 +17,5 @@ $ ->
     ],
   }
 
+  $(document).delegate "#month-selector", "change", () ->
+    $(this).closest("form").submit()
