@@ -1,28 +1,28 @@
 class Daterange
   include Enumerable
 
-  attr_accessor :start_time, :end_time
+  attr_accessor :start_date, :end_date
 
-  ONEDAY = 24 * 60 * 60 
+  ONEDAY = 1
 
-  def initialize(start_time, end_time)
-    @start_time = start_time
-    @end_time = end_time
+  def initialize(start_date, end_date)
+    @start_date = start_date
+    @end_date = end_date
   end
 
   def each
-    current_time = self.start_time
-    while current_time <= self.end_time
-      yield current_time
-      current_time += ONEDAY
+    current_date = self.start_date
+    while current_date <= self.end_date
+      yield current_date
+      current_date += ONEDAY
     end
   end
 
   def [](index)
     index *= ONEDAY
 
-    if self.start_time + index <= self.end_time
-      self.start_time + index
+    if self.start_date + index <= self.end_date
+      self.start_date + index
     end
   end
 end
