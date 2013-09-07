@@ -12,7 +12,7 @@ class Project < ActiveRecord::Base
 
   def self.active_for_daterange(daterange)
     arel = self.joins(:tasks)
-    arel = arel.where(:tasks => {:started_at => daterange.start_time..daterange.end_time})
+    arel = arel.where(:tasks => {:started_at => daterange.start_date..daterange.end_date})
     arel = arel.distinct
   end
 end

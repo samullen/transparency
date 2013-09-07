@@ -23,10 +23,12 @@
   <% end %>
 <% end %>
 
-<%= form_tag dashboard_path do %>
-  <%= select_tag "month", options_for_select(@months.map {|m| [m.strftime("%B %Y"), m.to_s(:db)]}), :class => "form-control" %>
+<div class="row">
+  <%= form_tag dashboard_path, :class => "col-md-4" do %>
+    <%= select_tag "month", options_for_select(@months.map {|m| [m.strftime("%B %Y"), m.to_s(:db)]}, @month.to_s(:db)), :class => "form-control" %>
   <%= submit_tag %>
 <% end %>
+</div>
 
 <div class='row'>
   <div id="project-percentages" class="col-md-4" style="height: 300px"></div>

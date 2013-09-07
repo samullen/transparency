@@ -12,11 +12,11 @@ describe ProjectWindow do
     end
 
     it "defaults the daterange to the current month" do
-      sdate = Time.now.beginning_of_month
-      edate = Time.now.end_of_month
+      sdate = Date.today.beginning_of_month
+      edate = sdate.end_of_month
       project_window = ProjectWindow.new(Object.new)
-      project_window.daterange.start_time.must_equal sdate
-      project_window.daterange.end_time.must_equal edate
+      project_window.daterange.start_date.must_equal sdate
+      project_window.daterange.end_date.must_equal edate
     end
   end
 
@@ -53,7 +53,7 @@ describe ProjectWindow do
 
   describe "#total_days" do
     it "returns the number of days in teh date range" do
-      daterange = Daterange.new(Time.now, 14.days.from_now)
+      daterange = Daterange.new(Date.today, Date.today + 14)
       project_window = ProjectWindow.new(Project.new, daterange)
       project_window.total_days.must_equal 15
     end
@@ -67,7 +67,7 @@ describe ProjectWindow do
         Task.new(:hours => 3, :started_at => "2013-08-05"),
         Task.new(:hours => 4.5, :started_at => "2013-08-08"),
       ]
-      @daterange = Daterange.new(Time.parse('2013-08-01'), Time.parse('2013-08-31'))
+      @daterange = Daterange.new(Date.parse('2013-08-01'), Date.parse('2013-08-31'))
 
       @project_window = ProjectWindow.new(@project, @daterange)
     end
