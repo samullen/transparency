@@ -3,7 +3,7 @@ class ProjectWindow
 
   def initialize(project, daterange=nil)
     @project = project
-    @daterange = daterange || Daterange.new(Time.now.beginning_of_month, Time.now.end_of_month)
+    @daterange = daterange || Daterange.new(Date.today.beginning_of_month, Date.today.end_of_month)
   end
 
   def self.for_projects(projects, daterange=nil)
@@ -15,11 +15,11 @@ class ProjectWindow
   end
 
   def tasks
-    @tasks ||= self.project.tasks.where(:started_at => @daterange.start_time .. @daterange.end_time)
+    @tasks ||= self.project.tasks.where(:started_at => @daterange.start_date .. @daterange.end_date)
   end
 
   def total_hours
-    self.tasks.sum(:hours).round(2)
+    self.tasks.to_a.sum(&:hours).round(2)
   end
 
   def total_days
