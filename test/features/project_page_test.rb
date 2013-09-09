@@ -14,9 +14,9 @@ feature "Project page Feature Test" do
 
     SigninPage.new(user).signin_user
 
-    visit praject_path(project)
+    visit project_path(project)
 
     project_page.has_task_breakdown? 
-    project_page.task_breakdown_rows.size.must_equal 2
+    project_page.task_breakdown_rows.size.must_equal 1
   end
 end
