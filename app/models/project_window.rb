@@ -15,7 +15,7 @@ class ProjectWindow
   end
 
   def tasks
-    @tasks ||= self.project.tasks.where(:started_at => @daterange.start_date .. @daterange.end_date)
+    @tasks ||= self.project.tasks.where(:started_at => @daterange.start_date .. @daterange.end_date).order(:started_at)
   end
 
   def total_hours
@@ -28,10 +28,18 @@ class ProjectWindow
 
   def hours_by_day
     @hours_by_day ||= self.daterange.map do |date|
-      self.tasks.find_all {|t| 
-        t.started_at.strftime("%Y%m%d") == date.strftime("%Y%m%d")
-      }.sum(&:hours).round(2)
+      self.tasks_for_date(date).sum(&:hours).round(2)
     end
+  end
+
+  def tasks_by_date
+    self.daterange.map { |date| self.tasks_for_date(date) }
+  end
+
+  def tasks_for_date(date)
+    self.tasks.find_all {|t| 
+      t.started_at.strftime("%Y%m%d") == date.strftime("%Y%m%d")
+    }
   end
 
   def average_hours

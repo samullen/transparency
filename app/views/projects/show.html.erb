@@ -1,0 +1,58 @@
+<%= javascript_tag do %>
+  var project_data = new Array;
+  var ykeys = new Array;
+
+  ykeys.push("<%=@project_window.project_name%>");
+
+  <% @project_window.hours_by_day.each_with_index do |hour, i| %>
+    var date = "<%= @project_window.daterange[i].strftime('%Y-%m-%d') %>";
+    project_data[<%=i%>] || (project_data[<%=i%>] = {});
+    project_data[<%=i%>]['y'] = date;
+    project_data[<%=i%>]["<%=@project_window.project_name%>"] = <%=hour%>;
+  <% end %>
+<% end %>
+
+<div class="row page-header">
+  <h2 class="col-md-12"><%= @project.name %> Details</h2>
+  <%= form_tag projects_path, :class => 'col-lg-4' do %>
+    <%= hidden_field_tag "project_id", @project.id %>
+    <%= select_tag "month", options_for_select(@months.map {|m| [m.strftime("%B %Y"), m.to_s(:db)]}, @month.to_s(:db)), :class => "form-control", :id => "month-selector" %>
+  <% end %>
+</div>
+
+<div class='row top-buffer'>
+  <div id="project-month" class="col-md-12" style="height: 300px"></div>
+  <!--
+  <div id="project-year" class="col-md-12" style="height: 100px"></div>
+  -->
+</div>
+
+<div class='row top-double_buffer'>
+<table id='task-breakdown' class='table table-striped table-condensed'>
+  <thead>
+  <tr>
+    <th>Project</th>
+    <% @daterange.each do |date| %>
+      <th><%= date.strftime("%d") %></th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @project_window.tasks_by_date.each_with_index do |tasks,i| %>
+    <% tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <% @daterange.count.times do |j| %>
+          <% if j == i %>
+            <td class='numeric'><%= task.hours %></td>
+            <%else%>
+            <td class='numeric'></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+</div>

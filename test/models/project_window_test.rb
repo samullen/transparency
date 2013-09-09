@@ -59,6 +59,36 @@ describe ProjectWindow do
     end
   end
 
+  describe "#tasks_for_date" do
+    before do
+      @project = Project.new
+      @tasks = [
+        Task.new(:hours => 3, :started_at => "2013-08-03"),
+        Task.new(:hours => 3, :started_at => "2013-08-05"),
+        Task.new(:hours => 4.5, :started_at => "2013-08-08"),
+      ]
+      @daterange = Daterange.new(Date.parse('2013-08-01'), Date.parse('2013-08-31'))
+
+      @project_window = ProjectWindow.new(@project, @daterange)
+    end
+
+    it "returns tasks for a given date" do
+      date = Date.parse("2013-08-03")
+
+      @project_window.stub :tasks, @tasks do
+        @project_window.tasks_for_date(date).must_include @tasks[0]
+      end
+    end
+
+    it "does not include tasks of other dates" do
+      date = Date.parse("2013-08-03")
+      @project_window.stub :tasks, @tasks do
+        @project_window.tasks_for_date(date).wont_include @tasks[1]
+        @project_window.tasks_for_date(date).wont_include @tasks[2]
+      end
+    end
+  end
+
   describe "#hours_by_day" do
     before do
       @project = Project.new
@@ -81,6 +111,28 @@ describe ProjectWindow do
         @project_window.hours_by_day[2].must_equal 3.0
         @project_window.hours_by_day[4].must_equal 3.0
         @project_window.hours_by_day[7].must_equal 4.5
+      end
+    end
+  end
+
+  describe "#tasks_by_date" do
+    before do
+      @project = Project.new
+      @tasks = [
+        Task.new(:hours => 3, :started_at => "2013-08-03"),
+        Task.new(:hours => 3, :started_at => "2013-08-05"),
+        Task.new(:hours => 4.5, :started_at => "2013-08-08"),
+      ]
+      @daterange = Daterange.new(Date.parse('2013-08-01'), Date.parse('2013-08-31'))
+
+      @project_window = ProjectWindow.new(@project, @daterange)
+    end
+
+    it "returns collections of tasks for each day of the month" do
+      @project_window.stub :tasks, @tasks do
+        @project_window.tasks_by_date.must_include [@tasks[0]]
+        @project_window.tasks_by_date.must_include [@tasks[1]]
+        @project_window.tasks_by_date.must_include [@tasks[2]]
       end
     end
   end
