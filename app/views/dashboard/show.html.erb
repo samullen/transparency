@@ -26,7 +26,7 @@
 <div class="row page-header">
   <h2 class="col-md-12">Project Hours by Day</h2>
   <%= form_tag dashboard_path, :class => 'col-lg-4' do %>
-    <%= select_tag "month", options_for_select(@months.map {|m| [m.strftime("%B %Y"), m.to_s(:db)]}, @month.to_s(:db)), :class => "form-control", :id => "month-selector" %>
+    <%= select_tag "month", options_for_select(@months.map {|m| [m.strftime("%B %Y"), m]}, @month), :class => "form-control", :id => "month-selector" %>
   <% end %>
 </div>
 
@@ -49,7 +49,7 @@
 <tbody>
   <% @project_windows.each do |project_window| %>
     <tr>
-      <td><%= project_window.project_name %></td>
+      <td><%= link_to project_window.project_name, project_path(project_window.project, {:month => @month.to_s}) %></td>
       <% project_window.hours_by_day.each do |hours| %>
         <td class='numeric'><%= hours %></td>
       <% end %> 
