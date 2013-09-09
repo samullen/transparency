@@ -2,17 +2,17 @@ class DashboardController < ApplicationController
   before_filter :authenticate_user!
 
   def show
-    @month = Date.today
-    @daterange = Daterange.new(@month.beginning_of_month, @month.end_of_month)
+    @month = Date.today.beginning_of_month
+    @daterange = Daterange.new(@month, @month.end_of_month)
 
     projects = Project.accessible_by(current_user).active_for_daterange(@daterange)
     prepare_dashboard(projects, @daterange)
   end
 
   def create
-    @month = Date.parse(params[:month])
+    @month = Date.parse(params[:month]).beginning_of_month
 
-    @daterange = Daterange.new(@month.beginning_of_month, @month.end_of_month)
+    @daterange = Daterange.new(@month, @month.end_of_month)
 
     projects = Project.accessible_by(current_user).active_for_daterange(@daterange)
     prepare_dashboard(projects, @daterange)
