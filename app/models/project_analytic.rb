@@ -6,6 +6,6 @@ class ProjectAnalytic
   end
 
   def total_hours
-    project_windows.sum {|pw| pw.total_hours}
+    project_windows.sum(&:total_hours).round(2)
   end
 end
