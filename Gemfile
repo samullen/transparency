@@ -24,6 +24,7 @@ gem 'jquery-rails'
 
 gem "devise", "~> 3.0.3"
 gem "simple_form", "~> 3.0.0rc"
+gem "anjlab-bootstrap-rails", "~> 3.0.0.2", :require => "bootstrap-rails"
 
 gem "harvested", "~> 1.0.1"
 
