@@ -20,7 +20,19 @@
             </ul>
           <% end %>
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-cog"></span>
+              </button>
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class='caret'></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li class='divider'></li>
+                <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+              </ul>
+
+            </div>
           </ul>
         </div>
       <% end %>
