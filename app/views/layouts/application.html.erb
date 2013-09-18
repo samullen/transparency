@@ -12,16 +12,18 @@
       <div class="navbar-header">
         <%= image_tag "redcoyote-logo-sm.png" %>
       </div>
-      <div class="navbar-inner">
-        <% unless current_page?(root_path) %>
-          <ul class="nav navbar-nav">
-            <li><%= link_to "Home", root_path %></li>
+      <% if user_signed_in? %>
+        <div class="navbar-inner">
+          <% unless current_page?(root_path) %>
+            <ul class="nav navbar-nav">
+              <li><%= link_to "Home", root_path %></li>
+            </ul>
+          <% end %>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
           </ul>
-        <% end %>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
-        </ul>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
