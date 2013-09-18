@@ -5,6 +5,7 @@ feature "Edit Account Feature Test" do
   scenario "Successful password change" do
     user_factory = UserFactory.new
     user = user_factory.create
+    SigninPage.new(user).signin_user
     account_page = AccountPage.new
 
     visit edit_user_path
