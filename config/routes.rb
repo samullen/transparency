@@ -4,6 +4,7 @@ Transparency::Application.routes.draw do
   root "dashboard#show"
 
   resource :dashboard, :controller => :dashboard, :only => [:show, :create]
+  resource :user, :controller => :user, :only => [:edit, :update]
   resources :projects, :only => [:show, :create]
 
   namespace :api do
